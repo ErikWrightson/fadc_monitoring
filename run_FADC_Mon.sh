@@ -22,12 +22,13 @@ while read -r FILE; do
     # If this is the first file in the directory, process it
     if [[ "$FILE_COUNT" -eq 1 ]]; then
         echo "First file in $SUBDIR: $FILE"
-        "$REPLAY_SCRIPT" "-f $FILE -z 5 -o ./ -j 10"
+        "$REPLAY_SCRIPT" "-f $FILE -z 5 -o ./ -j 10 -x17"
         for rtFile in ./*.root ; do
             "$PYTHON" "$PYTHON_SCRIPT" "$rtFile" > $PDF_NAME
             RUN_NUM = ${PDF_NAME:5:6} 
             logentry -g Autolog -l TLOG -t "PRAD FADC run $RUN_NUM"  -a ./$PDF_NAME 
             rm $rtFile
             rm ./$PDF_NAME
+        done
     fi
 done
